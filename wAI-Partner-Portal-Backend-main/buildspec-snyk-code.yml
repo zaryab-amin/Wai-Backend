@@ -1,0 +1,25 @@
+version: 0.2
+
+env:
+  secrets-manager:
+    SNYK_AUTH: "arn:aws:secretsmanager:us-east-1:566448944792:secret:SNYK-Tt7mRi:SNYK"
+phases:
+  install:
+    commands:
+      - npm i snyk -g  
+      - snyk auth $SNYK_AUTH
+
+  pre_build:
+    commands:
+      - echo "==================================="
+      - echo "Starting Snyk Analysis"
+      - echo "==================================="
+  build:
+    commands:
+      - snyk code test --json-file-output=temp.json ./src || true
+  post_build:
+    commands:
+      - |
+        jq "{\"app\":\"academy-backend\", \"messageType\": \"CodeScanReport\", \"reportType\": \"snyk\", \"createdAt\": \"$(date +"%Y-%m-%dT%H:%M:%S.%3NZ")\", \"source_repository\": env.CODEBUILD_SOURCE_REPO_URL, \"source_branch\": env.CODEBUILD_SOURCE_VERSION, \"build_id\": env.CODEBUILD_BUILD_ID, \"source_commitid\": env.CODEBUILD_RESOLVED_SOURCE_VERSION, \"report\": . }" temp.json > file.json
+      - aws s3 cp file.json s3://prescient-devops-scans/snyk-scans/$(date +"%Y")/$(date +"%m")/$(date +"%d")/$(date +"%H")/$(date +"%M")/$(date +"%S.%3NZ")/academy-backend-snyk.json
+    

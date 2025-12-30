@@ -1,0 +1,54 @@
+<div
+  style="
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    padding: 20px;
+  "
+>
+  <div
+    style="
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    "
+  >
+    <h2 style="margin-bottom: 20px; color: #333">
+      Welcome to Our Community, {{user.name}}!
+    </h2>
+    <p>
+      We're thrilled to have you with us! 🎉 To get started, please verify your
+      email by clicking on the link below:
+    </p>
+    <div style="text-align: center; margin: 30px 0">
+      <a
+        href="{{verificationUrl}}"
+        style="
+          display: inline-block;
+          background-color: #4caf50;
+          color: white;
+          padding: 10px 20px;
+          text-decoration: none;
+          border-radius: 5px;
+        "
+        >Verify Email Address</a
+      >
+    </div>
+    <p style="margin-top: 20px">
+      Once verified, you'll have full access to all of our features and
+      community resources. We hope you enjoy your experience!
+    </p>
+    <br />
+    <p>
+      If you have any questions or need assistance, please don't hesitate to
+      contact our support team at
+      <a href="mailto:info@IAE.com">info@IAE.com</a>.
+    </p>
+    <br />
+    <p style="margin-top: 30px; color: #888">Cheers,</p>
+    <p style="margin: 0; color: #888">The IAE Team</p>
+  </div>
+</div>
